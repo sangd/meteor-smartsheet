@@ -20,3 +20,68 @@ References
 -----------
 * Meteor documentation: http://docs.meteor.com/
 * Smartsheet API: http://www.smartsheet.com/developers/api-documentation
+
+html (jade)
+```
+h5 This composite document reads data from Smartsheet. Smartsheet authentication is required.
+  button.btn.btn-primary#btn-connect-smartsheet(title="Get data from Smartsheet", style="margin-right: 10px;")
+    | Connect to Smartsheet
+```
+
+javascript handler
+```
+'click #btn-connect-smartsheet': function (e) {
+  function smartsheetCallback() {
+    CD.init()
+    Session.set(SS_NEED_SMARTSHEET_LOGIN, false)
+  }
+
+  var options = {}
+
+  var credentialRequestCompleteCallback = Accounts.oauth.linkCredentialRequestCompleteHandler(smartsheetCallback);
+  Package["sangd:meteor-smartsheet"].Smartsheet.requestCredential(options, credentialRequestCompleteCallback);
+}
+```
+
+server side API calls
+```
+getSmartsheetList: function() {
+  try {
+    var url = 'https://api.smartsheet.com/1.1/home'
+    var res = Meteor.http.get(url, {headers:
+                { 'User-Agent': userAgent,
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + Meteor.user().services.smartsheet.accessToken
+                  }})
+    return res.content
+  } catch (e) {
+    Meteor.users.update(Meteor.userId(), {$unset: {'services.smartsheet': ''}})
+    console.log(e)
+    throw e
+  }
+},
+getSmartsheetData: function(dataset) {
+  try {
+    var url = 'https://api.smartsheet.com/1.1/sheet/' + dataset.id
+    var res = Meteor.http.get(url, {headers:
+                { 'User-Agent': userAgent,
+                  'Accept': 'text/csv',
+                  'Authorization': 'Bearer ' + Meteor.user().services.smartsheet.accessToken
+                  }})
+    return res.content
+  } catch (e) {
+    Meteor.users.update(Meteor.userId(), {$unset: {'services.smartsheet': ''}})
+    console.log(e)
+    throw e
+  }
+}
+```
+
+client-side API call
+```
+Meteor.call('getSmartsheetData', dataset.smartsheetDataset, function(err, strData) {
+  if (!err) {
+    console.log(strData)
+  }
+})
+```
