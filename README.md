@@ -32,14 +32,12 @@ javascript handler
 ```
 'click #btn-connect-smartsheet': function (e) {
   function smartsheetCallback() {
-    CD.init()
     Session.set(SS_NEED_SMARTSHEET_LOGIN, false)
   }
 
   var options = {}
 
-  var credentialRequestCompleteCallback = Accounts.oauth.linkCredentialRequestCompleteHandler(smartsheetCallback);
-  Package["sangd:meteor-smartsheet"].Smartsheet.requestCredential(options, credentialRequestCompleteCallback);
+  Meteor.loginWithSmartsheet(options, smartsheetCallback)
 }
 ```
 
