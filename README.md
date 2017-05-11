@@ -45,7 +45,7 @@ server side API calls
 ```
 getSmartsheetList: function() {
   try {
-    var url = 'https://api.smartsheet.com/1.1/home'
+    var url = 'https://api.smartsheet.com/2.0/home'
     var res = Meteor.http.get(url, {headers:
                 { 'User-Agent': userAgent,
                   'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ getSmartsheetList: function() {
 },
 getSmartsheetData: function(dataset) {
   try {
-    var url = 'https://api.smartsheet.com/1.1/sheet/' + dataset.id
+    var url = 'https://api.smartsheet.com/2.0/sheets/' + dataset.id
     var res = Meteor.http.get(url, {headers:
                 { 'User-Agent': userAgent,
                   'Accept': 'text/csv',
