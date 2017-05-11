@@ -41,7 +41,7 @@ var getTokens = function (query) {
   var response;
   try {
     response = HTTP.post(
-      "https://api.smartsheet.com/1.1/token", {params: {
+      "https://api.smartsheet.com/2.0/token", {params: {
         grant_type: 'authorization_code',
         client_id: config.clientId,
         code: query.code,        
@@ -66,7 +66,7 @@ var getTokens = function (query) {
 
 var getIdentity = function (accessToken) {
   try {
-    return HTTP.get("https://api.smartsheet.com/1.1/user/me",{
+    return HTTP.get("https://api.smartsheet.com/2.0/users/me",{
                       headers: { 'Authorization': 'Bearer ' + accessToken }
                     }).data;
   } catch (err) {
