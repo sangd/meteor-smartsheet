@@ -1,6 +1,6 @@
 Package.describe({
   summary: "Smartsheet OAuth flow",
-  version: "1.0.0",
+  version: "1.0.1",
   name: "sangd:meteor-smartsheet",
   git: "https://github.com/sangd/meteor-smartsheet.git"
 });
