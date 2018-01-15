@@ -6,12 +6,12 @@ Package.describe({
 });
 
 Package.on_use(function(api) {
-  api.use('oauth2', ['client', 'server']);
-  api.use('oauth', ['client', 'server']);
-  api.use('http', ['server']);
-  api.use('sha', ['server']);
-  api.use(['underscore', 'service-configuration'], ['client', 'server']);
-  api.use(['random', 'templating'], 'client');
+  api.use('oauth2@1.1.11', ['client', 'server']);
+  api.use('oauth@1.1.12', ['client', 'server']);
+  api.use('http@1.2.10', ['server']);
+  api.use('sha@1.0.9', ['server']);
+  api.use(['underscore@1.0.10', 'service-configuration@1.0.11'], ['client', 'server']);
+  api.use(['random@1.0.10', 'templating@1.2.15'], 'client');
 
   api.export('Smartsheet');
 
